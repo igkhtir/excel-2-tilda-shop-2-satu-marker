@@ -12,7 +12,7 @@
 <p><b>python -m venv myenv</b>       # для создания виртуальрого окружения</p>
 <p><b>source myenv/bin/activate</b>  # для запуска виртуальрого окружения Linux и macOS</p>
 <p><b>myenv\Scripts\activate.bat</b>     # для и запуска виртуальрого окружения Windows</p>
-<p><b>pip install -r requirements.txt</b> # Для установки дополнительных библиотек, используемых в скрипте</p>
+<p><b>pip install -r requirements.txt</b> # Для установки в виртуальрое окружение дополнительных библиотек, используемых в скрипте</p>
 <br>
 <p>Запуск скрипта из виртуального окружения:</p>
 <ul><li><b>python xls2marktplss.py sample.xlsx</b></li></ul>
