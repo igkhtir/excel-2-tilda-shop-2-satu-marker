@@ -9,9 +9,9 @@
   <li>- Выполнить следующие команды:</li>
 </ul>
 <br>
-<p><b>python -m venv myenv</b>       # для создания и запуска виртуальрого окружения</p>
-<p><b>source myenv/bin/activate</b>  # для Linux и macOS</p>
-<p><b>myenv\Scripts\activate.bat</b>     # для Windows</p>
+<p><b>python -m venv myenv</b>       # для создания виртуальрого окружения</p>
+<p><b>source myenv/bin/activate</b>  # для запуска виртуальрого окружения Linux и macOS</p>
+<p><b>myenv\Scripts\activate.bat</b>     # для и запуска виртуальрого окружения Windows</p>
 <p><b>pip install -r requirements.txt</b> # Для установки дополнительных библиотек, используемых в скрипте</p>
 <br>
 <p>Запуск скрипта из виртуального окружения:</p>
