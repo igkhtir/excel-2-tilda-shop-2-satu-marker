@@ -1,7 +1,7 @@
-from typing import List, Any
 import sys
 import pandas as pd
-import logging
+
+import satu
 
 
 tilda_heads = {'Tilda UID': "UID",
@@ -21,13 +21,6 @@ tilda_heads = {'Tilda UID': "UID",
                'External ID': "Внутренний ID",
                'Parent UID': "Родительский UID"}
 
-def fulling(len_products_in, fuller):
-    raw = fuller
-    k = 0
-    while k < len_products_in:
-        raw.append(fuller + 'a')
-    return raw
-
 
 def show_help(param):
     if param == '-h' or param == '--help' or param == '/?' or param == '?':
@@ -44,7 +37,6 @@ def show_help(param):
 
 
 def main():
-    global data_set
     param = []
     for params in sys.argv:
         param.append(params)
@@ -104,93 +96,15 @@ def main():
         # income_data_sheet.to_excel((sheet_names[8]+'.xlsx'), index=False)
         print(tilda_data_set.head())
 
-        products = tilda_data_set
-        products_in = products.head(0)
-        products_out = pd.DataFrame()
-        len_products_in = len(products_in.head())
-
-        products_out["Код_товара"] = []
-        products_out["Название_позиции"] = []
-        products_out["Поисковые_запросы"] = []
-        products_out["Номер_группы"] = []
-        products_out["Название_группы"] = []
-        products_out["Адрес_подраздела"] = []
-        products_out["Идентификатор_подраздела"] = []
-        products_out["ID_группы_разновидностей"] = []
-        products_out["Описание"] = []
-        products_out["Тип_товара"] = []
-        products_out["Наличие"] = []
-        products_out["Цена"] = []
-        products_out["Валюта"] = []
-        products_out["Единица_измерения"] = []
-        products_out["Ссылка_изображения"] = []
-
-        products_out_col_number = 6
-        products_in_col_number = 0
-
-        for all in products_in.columns:
-            all = all.replace('Characteristics: ', '')
-            all = all.replace('Characteristics:', '')
-
-            if all == "Category":
-                products_out["Название_группы"] = products["Category"]
-
-            elif all == "Price":
-                products_out["Цена"] = products["Price"]
-                products_out["Валюта"] = fulling(len_products_in, "KZT")
-                products_out["Единица_измерения"] = fulling(len_products_in, "шт.")
-
-
-            elif all == "Photo":
-                products_out["Ссылка_изображения"] = products[all]
-
-
-            elif all == "Title":
-                products_out["Название_позиции"] = products[all]
-
-
-            elif all == "Description":
-                products_out["Описание"] = products[all]
-
-
-            elif all == "Brand":
-                products_out["Производитель"] = products[all]
-
-
-            elif all == "Страна производства":
-                try:
-                    try:
-                        products_out["Страна_производитель"] = products['Characteristics:' + all]
-                    except:
-                        products_out["Страна_производитель"] = products['Characteristics: ' + all]
-                except:
-                    products_out["Страна_производитель"] = products[all]
-
-
-            else:
-                products_out["A"] = fulling(len_products_in, all)
-                products_out["B"] = ''
-                try:
-                    try:
-                        products_out["C"] = products['Characteristics:' + all]
-                    except:
-                        products_out["C"] = products['Characteristics: ' + all]
-                except:
-                    products_out["C"] = products[all]
-                products_out = products_out.rename(
-                    columns={'A': 'Название_характеристики', 'B': 'Измерение_характеристики',
-                             'C': 'Значение_характеристики'})
-        """        products_out["Название_характеристики"]
-                products_out["Измерение_характеристики"]
-                products_out["Значение_характеристики"]
-                """
-
-        products_out["Наличие"] = fulling(len_products_in, "+")
-        products_out["Тип_товара"] = fulling(len_products_in, "r")
-
         tilda_data_set.to_csv(('tilda - ' + sheet_name + '.csv'), index=False, sep=";")
-        products_out.to_excel(('satu - ' + sheet_name + '.xlsx'), index=False)
-        
+
+
+        """
+        Следующая строка собирают и создает файла для импорта в маркетплейс satu.
+        Если такой необходимости нет, сделайте ее комментарием, либо удалите.         
+        """
+        products_out = satu.satu(tilda_data_set, sheet_name)   # строка вызыакт сбор таблиц для сату
+
         print("ВНИМАНИЕ!!! Не забудьте добавить или удалить обязательные для каждого сервиса поля с вашими техническими данными")
 
 
