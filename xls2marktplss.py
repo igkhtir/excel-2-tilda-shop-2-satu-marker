@@ -1,3 +1,4 @@
+import os
 import sys
 import pandas as pd
 
@@ -37,6 +38,11 @@ def show_help(param):
 
 
 def main():
+    if os.path.exists('tilda') == False:
+        os.mkdir('tilda')
+    if os.path.exists('satu') == False:
+        os.mkdir('satu')
+
     param = []
     for params in sys.argv:
         param.append(params)
@@ -96,7 +102,7 @@ def main():
         # income_data_sheet.to_excel((sheet_names[8]+'.xlsx'), index=False)
         print(tilda_data_set.head())
 
-        tilda_data_set.to_csv(('tilda - ' + sheet_name + '.csv'), index=False, sep=";")
+        tilda_data_set.to_csv(('tilda/tilda - ' + sheet_name + '.csv'), index=False, sep=";")
 
 
         """
