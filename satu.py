@@ -32,8 +32,10 @@ def satu (products, sheet_name):
     products_in_col_number = 0
 
     for all in products_in.columns:
-        all = all.replace('Characteristics: ', '')
         all = all.replace('Characteristics:', '')
+        except_list = ('SKU', 'Mark', 'Text', 'Quantity', 'Price Old', 'Editions', 'Modifications', 'External ID', 'Parent UID', 'Скадкав %')
+        if all in except_list:
+            continue
 
         if all == "Category":
             products_out["Название_группы"] = products["Category"]
@@ -43,32 +45,20 @@ def satu (products, sheet_name):
             products_out["Валюта"] = fulling(len_products_in, "KZT")
             products_out["Единица_измерения"] = fulling(len_products_in, "шт.")
 
-
         elif all == "Photo":
             products_out["Ссылка_изображения"] = products[all]
-
 
         elif all == "Title":
             products_out["Название_позиции"] = products[all]
 
-
         elif all == "Description":
             products_out["Описание"] = products[all]
-
 
         elif all == "Brand":
             products_out["Производитель"] = products[all]
 
-
-        elif all == "Страна производства":
-            try:
-                try:
-                    products_out["Страна_производитель"] = products['Characteristics:' + all]
-                except:
-                    products_out["Страна_производитель"] = products['Characteristics: ' + all]
-            except:
-                products_out["Страна_производитель"] = products[all]
-
+        elif all == "Страна" or all == "Страна ":
+            products_out["Страна_производитель"] = products['Characteristics:' + all]
 
         else:
             products_out["A"] = fulling(len_products_in, all)
@@ -90,6 +80,7 @@ def satu (products, sheet_name):
 
     products_out["Наличие"] = fulling(len_products_in, "+")
     products_out["Тип_товара"] = fulling(len_products_in, "r")
-    products_out.to_excel(('satu - ' + sheet_name + '.xlsx'), index=False)
+
+    products_out.to_excel(('satu/satu - ' + sheet_name + '.xlsx'), index=False)
 
     return (products_out)
