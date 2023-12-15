@@ -63,7 +63,7 @@ def main():
 
     for sheet_name in data_set.sheet_names:
 
-        if (sheet_name == "Цены") or (sheet_name == "Оглавление"):
+        if (sheet_name == "Цены") or (sheet_name == "Оглавление") or (sheet_name == "Дополнительная информация"):
             continue
         income_data_sheet = data_set.parse(sheet_name)
         print(sheet_name)
