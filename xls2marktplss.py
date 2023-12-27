@@ -68,16 +68,28 @@ def main():
         income_data_sheet = data_set.parse(sheet_name)
         print(sheet_name)
 
+
         k = 0
         for column in income_data_sheet.columns:
             income_data_sheet = income_data_sheet.rename(columns={column: income_data_sheet.iat[0, k]})
             k = k + 1
         income_data_sheet = income_data_sheet.drop(0)
-        empty_list = []
 
         income_data_sheet = income_data_sheet.drop(columns='Подкатегория 1')
         income_data_sheet = income_data_sheet.drop(columns='Подкатегория 2')
 
+        error_exit = False
+        test_cols = income_data_sheet.columns.values.tolist()
+        for item in test_cols:
+            if test_cols.count(item) > 1:
+                multiple_column = item
+                error_exit = True
+                break
+        if error_exit == True:
+            print ("!!!!! Лист не может быть обраобан, так как содержит несколько колонок с одинаковыми названиями: ", multiple_column)
+            break
+
+        empty_list = []
         k = 1
         while k <= len(income_data_sheet):
             empty_list.append('')
@@ -100,7 +112,9 @@ def main():
             # print(col)
 
         # income_data_sheet.to_excel((sheet_names[8]+'.xlsx'), index=False)
-        print(tilda_data_set.head())
+        # print(tilda_data_set.head())
+        print("Обработка прошла успешно")
+        print("----")
 
         tilda_data_set.to_csv(('tilda/tilda - ' + sheet_name + '.csv'), index=False, sep=";")
 
@@ -111,8 +125,11 @@ def main():
         """
         products_out = satu.satu(tilda_data_set, sheet_name)   # строка вызыакт сбор таблиц для сату
 
+    if error_exit == False:
+        print()
+        print("--------")
         print("ВНИМАНИЕ!!! Не забудьте добавить или удалить обязательные для каждого сервиса поля с вашими техническими данными")
-
+        print("--------------")
 
 if __name__ == '__main__':
     main()
