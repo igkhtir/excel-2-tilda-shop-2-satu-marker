@@ -60,6 +60,18 @@ def satu (products, sheet_name):
         elif all == "Страна" or all == "Страна ":
             products_out["Страна_производитель"] = products['Characteristics:' + all]
 
+        elif all == "Номер_группы" or all == "Номер_группы ":
+            products_out["Номер_группы"] = products['Characteristics:' + all]
+
+        elif all == "Название_группы" or all == "Название_группы ":
+            products_out["Название_группы"] = products['Characteristics:' + all]
+
+        elif all == "Адрес_подраздела" or all == "Адрес_подраздела ":
+            products_out["Адрес_подраздела"] = products['Characteristics:' + all]
+
+        elif all == "Идентификатор_подраздела" or all == "Идентификатор_подраздела ":
+            products_out["Идентификатор_подраздела"] = products['Characteristics:' + all]
+
         else:
             products_out["A"] = fulling(len_products_in, all)
             products_out["B"] = ''
